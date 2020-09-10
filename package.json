@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@tailwindui/react": "^0.1.1",
+    "firebase": "^7.19.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "tailwindcss": "^1.8.6"
