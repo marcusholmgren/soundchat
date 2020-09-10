@@ -1,4 +1,5 @@
 import React, {PropsWithChildren, useEffect, useState} from 'react'
+import {NavLink} from "react-router-dom";
 import {Transition} from "@tailwindui/react";
 import {MenuItem} from "./components/MenuItem";
 
@@ -23,6 +24,66 @@ export function AppShell({children}: PropsWithChildren<AppShellProps>) {
         return () => document.removeEventListener("keyup", handleEscape);
     }, [isShowing]);
 
+    const desktopUserElement = true ? (
+        <div>
+            <button
+                className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+                id="user-menu"
+                aria-label="User menu"
+                aria-haspopup="true"
+                onClick={() => setIsShowing(!isShowing)}
+            >
+                <img className="h-8 w-8 rounded-full"
+                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                     alt=""/>
+            </button>
+        </div>
+    ) : (
+        <div>
+            <NavLink
+                to="/signin"
+                className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+            >Sign in</NavLink>
+        </div>
+    )
+
+    const mobileUserElement = false ? (
+        <div className="pt-4 pb-3 border-t border-gray-700">
+            <div className="flex items-center px-5 space-x-3">
+                <div className="flex-shrink-0">
+                    <img className="h-10 w-10 rounded-full"
+                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                         alt=""/>
+                </div>
+                <div className="space-y-1">
+                    <div className="text-base font-medium leading-none text-white">Tom Cook</div>
+                    <div className="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+                </div>
+            </div>
+            <div className="mt-3 px-2 space-y-1" role="menu" aria-orientation="vertical"
+                 aria-labelledby="user-menu">
+                <a href="#"
+                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                   role="menuitem">Your Profile</a>
+
+                <a href="#"
+                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                   role="menuitem">Settings</a>
+
+                <a href="#"
+                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                   role="menuitem">Sign out</a>
+            </div>
+        </div>
+    ) : (
+        <div className="pt-4 pb-3 border-t border-gray-700">
+            <NavLink
+                to="/signin"
+                onClick={() => setMobileMenu(false)}
+            >Sign in</NavLink>
+        </div>
+    )
+
     return (
 
         <div>
@@ -30,16 +91,16 @@ export function AppShell({children}: PropsWithChildren<AppShellProps>) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
-                            <div className="flex-shrink-0">
+                            <NavLink to="/" className="flex-shrink-0">
                                 <img className="h-8 w-8"
                                      src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
                                      alt="Soundchat logo"/>
-                            </div>
+                            </NavLink>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
-                                    <MenuItem text="Select Artist" selected={true}/>
-                                    <MenuItem text="My Songs"/>
-                                    <MenuItem text="Add Tune"/>
+                                    <MenuItem text="Select Artist" to="/artist" selected={true}/>
+                                    <MenuItem text="My Songs" to="/my-songs"/>
+                                    <MenuItem text="Add Tune" to="/add"/>
                                 </div>
                             </div>
                         </div>
@@ -56,19 +117,7 @@ export function AppShell({children}: PropsWithChildren<AppShellProps>) {
 
                                 { /* <!-- Profile dropdown --> */}
                                 <div className="ml-3 relative">
-                                    <div>
-                                        <button
-                                            className="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
-                                            id="user-menu"
-                                            aria-label="User menu"
-                                            aria-haspopup="true"
-                                            onClick={() => setIsShowing(!isShowing)}
-                                        >
-                                            <img className="h-8 w-8 rounded-full"
-                                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                 alt=""/>
-                                        </button>
-                                    </div>
+                                    {desktopUserElement}
                                     { /*
               <!--
                 Profile dropdown panel, show/hide based on dropdown state.
@@ -143,37 +192,11 @@ export function AppShell({children}: PropsWithChildren<AppShellProps>) {
     */}
                 <div className={"md:hidden ".concat(mobileMenu ? "block" : "hidden")}>
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        <MenuItem text="Select Artist"/>
-                        <MenuItem text="My Songs"/>
-                        <MenuItem text="Add Tune"/>
+                        <MenuItem text="Select Artist" to="/artist"/>
+                        <MenuItem text="My Songs" to="/my-songs"/>
+                        <MenuItem text="Add Tune" to="/add"/>
                     </div>
-                    <div className="pt-4 pb-3 border-t border-gray-700">
-                        <div className="flex items-center px-5 space-x-3">
-                            <div className="flex-shrink-0">
-                                <img className="h-10 w-10 rounded-full"
-                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="space-y-1">
-                                <div className="text-base font-medium leading-none text-white">Tom Cook</div>
-                                <div className="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
-                            </div>
-                        </div>
-                        <div className="mt-3 px-2 space-y-1" role="menu" aria-orientation="vertical"
-                             aria-labelledby="user-menu">
-                            <a href="#"
-                               className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                               role="menuitem">Your Profile</a>
-
-                            <a href="#"
-                               className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                               role="menuitem">Settings</a>
-
-                            <a href="#"
-                               className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                               role="menuitem">Sign out</a>
-                        </div>
-                    </div>
+                    {mobileUserElement}
                 </div>
             </nav>
 

@@ -9,8 +9,10 @@
   "dependencies": {
     "@tailwindui/react": "^0.1.1",
     "firebase": "^7.19.1",
+    "history": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^6.0.0-beta.0",
     "tailwindcss": "^1.8.6"
   },
   "devDependencies": {

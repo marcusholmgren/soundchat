@@ -1,12 +1,14 @@
 import React from "react"
+import {NavLink} from 'react-router-dom';
 
 interface MenuItemProps {
     text: string
+    to: string
     selected?: boolean
     mobile?: boolean
 }
 
-export function MenuItem({text, selected = false, mobile = false}: MenuItemProps) {
+export function MenuItem({text, to, selected = false, mobile = false}: MenuItemProps) {
 
     const desktopSelectedClassName = "px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700";
     const mobileSelectedClassName = "block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700";
@@ -22,10 +24,10 @@ export function MenuItem({text, selected = false, mobile = false}: MenuItemProps
     }
 
     return (
-        <a
-            href="#"
+        <NavLink
+            to={to}
             className={linkClass}>
             {text}
-        </a>
+        </NavLink>
     )
 }
