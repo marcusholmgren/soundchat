@@ -7,8 +7,10 @@
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@tailwindui/react": "^0.1.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tailwindcss": "^1.8.6"
   },
   "devDependencies": {
     "@snowpack/app-scripts-react": "^1.10.0",
@@ -17,7 +19,10 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/snowpack-env": "^2.3.0",
+    "autoprefixer": "^9.8.6",
     "jest": "^26.2.2",
+    "postcss": "^7.0.32",
+    "postcss-cli": "^7.1.2",
     "prettier": "^2.0.5",
     "snowpack": "^2.10.3",
     "typescript": "^4.0.2"
