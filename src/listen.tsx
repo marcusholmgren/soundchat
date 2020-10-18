@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export function Listen() {
-    return (
-        <div>Listen</div>
-    )
+  return <div>Listen</div>;
 }

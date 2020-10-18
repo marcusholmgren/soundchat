@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export function NotFound() {
-    return (
-        <div>Not Found</div>
-    )
+  return <div>Not Found</div>;
 }

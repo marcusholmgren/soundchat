@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export function SelectArtist() {
-    return (
-        <div>Select Artist</div>
-    )
+  return <div>Select Artist</div>;
 }

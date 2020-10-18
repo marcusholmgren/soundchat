@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export function AddTune() {
-    return (
-        <div>Add Tune</div>
-    )
+  return <div>Add Tune</div>;
 }

@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export function MySongs() {
-    return (
-        <div>My Songs</div>
-    )
+  return <div>My Songs</div>;
 }

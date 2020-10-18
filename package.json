@@ -7,27 +7,28 @@
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
-    "@tailwindui/react": "^0.1.1",
-    "firebase": "^7.19.1",
+    "@headlessui/react": "^0.2.0",
+    "@tailwindcss/ui": "^0.6.2",
+    "firebase": "^7.24.0",
     "history": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^6.0.0-beta.0",
-    "tailwindcss": "^1.8.6"
+    "tailwindcss": "^1.9.4"
   },
   "devDependencies": {
-    "@snowpack/app-scripts-react": "^1.10.0",
+    "@snowpack/app-scripts-react": "^1.12.3",
     "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^11.0.2",
-    "@types/react": "^16.9.35",
+    "@testing-library/react": "^11.1.0",
+    "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/snowpack-env": "^2.3.0",
-    "autoprefixer": "^9.8.6",
-    "jest": "^26.2.2",
-    "postcss": "^7.0.32",
-    "postcss-cli": "^7.1.2",
-    "prettier": "^2.0.5",
-    "snowpack": "^2.10.3",
-    "typescript": "^4.0.2"
+    "autoprefixer": "^10.0.1",
+    "jest": "^26.5.3",
+    "postcss": "^8.1.1",
+    "postcss-cli": "^8.1.0",
+    "prettier": "^2.1.2",
+    "snowpack": "^2.14.3",
+    "typescript": "^4.0.3"
   }
 }
