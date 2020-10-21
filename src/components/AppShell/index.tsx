@@ -1,14 +1,18 @@
-import React, {PropsWithChildren, useContext, useEffect, useState} from 'react';
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { NavLink } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { MenuItem } from './components/MenuItem';
-import { auth, provider, FirebaseContext, useAuth  } from "../../firebase"
+import { auth, provider, FirebaseContext, useAuth } from '../../firebase';
 //const firebase = new Firebase();
-import {SignOut} from "./components/SignOut";
-import {Signin} from "../../signin";
+import { SignOut } from './components/SignOut';
+import { Signin } from '../../signin';
 
-
-interface AppShellProps {}
+type AppShellProps = {}
 
 export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
   const user = useAuth();
@@ -40,8 +44,8 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
       >
         <img
           className="h-8 w-8 rounded-full"
-          src={user.photoURL ?? ""}
-          alt={user.displayName ?? ""}
+          src={user.photoURL ?? ''}
+          alt={user.displayName ?? ''}
         />
       </button>
     </div>
@@ -62,8 +66,8 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
         <div className="flex-shrink-0">
           <img
             className="h-10 w-10 rounded-full"
-            src={user.photoURL ?? ""}
-            alt={user.displayName ?? ""}
+            src={user.photoURL ?? ''}
+            alt={user.displayName ?? ''}
           />
         </div>
         <div className="space-y-1">
@@ -98,8 +102,8 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
         </a>
 
         <NavLink
-            to="/"
-           className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+          to="/"
+          className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
           role="menuitem"
         >
           <SignOut setIsShowing={setIsShowing} />
@@ -116,51 +120,55 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
 
   return (
     <div>
-            <FirebaseContext.Provider value={{user}}>
-      <nav className="bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <NavLink to="/" className="flex-shrink-0">
-                <img
-                  className="h-8 w-8"
-                  src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
-                  alt="Soundchat logo"
-                />
-              </NavLink>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
-                  <MenuItem text="Select Artist" to="/artist" selected={true} />
-                  <MenuItem text="My Songs" to="/my-songs" />
-                  <MenuItem text="Add Tune" to="/add" />
+      <FirebaseContext.Provider value={{ user }}>
+        <nav className="bg-gray-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex items-center">
+                <NavLink to="/" className="flex-shrink-0">
+                  <img
+                    className="h-8 w-8"
+                    src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
+                    alt="Soundchat logo"
+                  />
+                </NavLink>
+                <div className="hidden md:block">
+                  <div className="ml-10 flex items-baseline space-x-4">
+                    <MenuItem
+                      text="Select Artist"
+                      to="/artist"
+                      selected={true}
+                    />
+                    <MenuItem text="My Songs" to="/my-songs" />
+                    <MenuItem text="Add Tune" to="/add" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-4 flex items-center md:ml-6">
-                <button
-                  className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
-                  aria-label="Notifications"
-                >
-                  <svg
-                    className="h-6 w-6"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
+              <div className="hidden md:block">
+                <div className="ml-4 flex items-center md:ml-6">
+                  <button
+                    className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
+                    aria-label="Notifications"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      className="h-6 w-6"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                      />
+                    </svg>
+                  </button>
 
-                {/* <!-- Profile dropdown --> */}
-                <div className="ml-3 relative">
-                  {desktopUserElement}
-                  {/*
+                  {/* <!-- Profile dropdown --> */}
+                  <div className="ml-3 relative">
+                    {desktopUserElement}
+                    {/*
               <!--
                 Profile dropdown panel, show/hide based on dropdown state.
 
@@ -172,122 +180,141 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
                   To: "transform opacity-0 scale-95"
               -->
               */}
-                  <Transition
-                    show={isShowing}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    {(ref) => (
-                      <div
-                        ref={ref}
-                        className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
-                      >
-                        <div className="py-1 rounded-md bg-white shadow-xs">
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
-                            Your Profile
-                          </a>
+                    <Transition
+                      show={isShowing}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      {(ref) => (
+                        <div
+                          ref={ref}
+                          className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+                        >
+                          <div className="py-1 rounded-md bg-white shadow-xs">
+                            <a
+                              href="#"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              Your Profile
+                            </a>
 
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
-                            Settings
-                          </a>
+                            <a
+                              href="#"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              Settings
+                            </a>
 
-                          <NavLink
+                            <NavLink
                               to="/"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
-                            <SignOut setIsShowing={setIsShowing} />
-                          </NavLink>
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              <SignOut setIsShowing={setIsShowing} />
+                            </NavLink>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Transition>
+                      )}
+                    </Transition>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="-mr-2 flex md:hidden">
-              {/* <!-- Mobile menu button --> */}
-              <button
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                onClick={() => setMobileMenu(!mobileMenu)}
-              >
-                {/* <!-- Menu open: "hidden", Menu closed: "block" --> */}
-                <svg
-                  className={'h-6 w-6 '.concat(mobileMenu ? 'hidden' : 'block')}
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <div className="-mr-2 flex md:hidden">
+                {/* <!-- Mobile menu button --> */}
+                <button
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+                  onClick={() => setMobileMenu(!mobileMenu)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-                {/* <!-- Menu open: "block", Menu closed: "hidden" --> */}
-                <svg
-                  className={'h-6 w-6 '.concat(mobileMenu ? 'block' : 'hidden')}
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  {/* <!-- Menu open: "hidden", Menu closed: "block" --> */}
+                  <svg
+                    className={'h-6 w-6 '.concat(
+                      mobileMenu ? 'hidden' : 'block',
+                    )}
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                  {/* <!-- Menu open: "block", Menu closed: "hidden" --> */}
+                  <svg
+                    className={'h-6 w-6 '.concat(
+                      mobileMenu ? 'block' : 'hidden',
+                    )}
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/*
+          {/*
     <!--
       Mobile menu, toggle classNamees based on menu state.
 
       Open: "block", closed: "hidden"
     -->
     */}
-        <div className={'md:hidden '.concat(mobileMenu ? 'block' : 'hidden')}>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <MenuItem text="Select Artist" to="/artist" mobile={true} setMobileMenu={setMobileMenu} />
-            <MenuItem text="My Songs" to="/my-songs" mobile={true} setMobileMenu={setMobileMenu} />
-            <MenuItem text="Add Tune" to="/add" mobile={true} setMobileMenu={setMobileMenu} />
+          <div className={'md:hidden '.concat(mobileMenu ? 'block' : 'hidden')}>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <MenuItem
+                text="Select Artist"
+                to="/artist"
+                mobile={true}
+                setMobileMenu={setMobileMenu}
+              />
+              <MenuItem
+                text="My Songs"
+                to="/my-songs"
+                mobile={true}
+                setMobileMenu={setMobileMenu}
+              />
+              <MenuItem
+                text="Add Tune"
+                to="/add"
+                mobile={true}
+                setMobileMenu={setMobileMenu}
+              />
+            </div>
+            {mobileUserElement}
           </div>
-          {mobileUserElement}
-        </div>
-      </nav>
+        </nav>
 
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-lg leading-6 font-semibold text-gray-900">
-            Soundchat
-          </h1>
-        </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {/* <!-- Replace with your content --> */}
-          <div className="px-4 py-4 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+        <header className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <h1 className="text-lg leading-6 font-semibold text-gray-900">
+              Soundchat
+            </h1>
           </div>
-          {children}
-          {/*  <!-- /End replace --> */}
-        </div>
-      </main>
-              </FirebaseContext.Provider>
+        </header>
+        <main>
+          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            {/* <!-- Replace with your content --> */}
+            <div className="px-4 py-4 sm:px-0">
+              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+            </div>
+            {children}
+            {/*  <!-- /End replace --> */}
+          </div>
+        </main>
+      </FirebaseContext.Provider>
     </div>
   );
 }

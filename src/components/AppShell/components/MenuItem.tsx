@@ -1,20 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-interface MenuItemProps {
+type MenuItemProps = {
   text: string;
   to: string;
   selected?: boolean;
   mobile?: boolean;
-  setMobileMenu?: (show: boolean) => void
-}
+  setMobileMenu?: (show: boolean) => void;
+};
 
 export function MenuItem({
   text,
   to,
   selected = false,
   mobile = false,
-    setMobileMenu
+  setMobileMenu,
 }: MenuItemProps) {
   const desktopSelectedClassName =
     'px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700';
@@ -36,8 +36,11 @@ export function MenuItem({
   }
 
   return (
-    <NavLink to={to}
-             className={linkClass} onClick={() => setMobileMenu ? setMobileMenu(false) : null}>
+    <NavLink
+      to={to}
+      className={linkClass}
+      onClick={() => (setMobileMenu ? setMobileMenu(false) : null)}
+    >
       {text}
     </NavLink>
   );

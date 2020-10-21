@@ -3,7 +3,7 @@ import 'firebase/app';
 import 'firebase/auth';
 //import "firebase/database";
 import firebaseConfig from './config';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 
 /*
 export class Firebase {
@@ -62,25 +62,22 @@ export const provider = new firebase.default.auth.GoogleAuthProvider();
 //     // An error happened.
 //   });
 
-
 export function useAuth() {
-    const [authUser, setAuthUser] = useState<firebase.User>(null);
+  const [authUser, setAuthUser] = useState<firebase.User>(null);
 
-    useEffect(() => {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('User logged in', user.displayName);
+        setAuthUser(user);
+      } else {
+        setAuthUser(null);
+        console.log('User logged out');
+      }
+    });
 
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                  console.log('User logged in', user.displayName);
-                setAuthUser(user);
-            } else {
-                setAuthUser(null);
-                  console.log('User logged out');
-            }
-        })
+    return () => unsubscribe();
+  }, []);
 
-        return () => unsubscribe();
-    }, []);
-
-    return authUser;
+  return authUser;
 }
-

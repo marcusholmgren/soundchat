@@ -1,9 +1,10 @@
-import {createContext} from 'react';
-import firebase from "firebase";
+import { createContext } from 'react';
+import type firebase from 'firebase';
 
-interface AuthenticationContext  {
-    user: firebase.User | null;
+type AuthenticationContext = {
+  user: firebase.User | null;
 }
 
-export const FirebaseContext = createContext<AuthenticationContext>({user: null});
-
+export const FirebaseContext = createContext<AuthenticationContext>({
+  user: null,
+});
