@@ -115,6 +115,9 @@ dist
 # production
 /build
 
+# snowpack
+/web_modules
+
 # misc
 .DS_Store
 .env.local
