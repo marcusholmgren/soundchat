@@ -18,6 +18,7 @@ export function SongForm({ onSubmit }: SongFormProps) {
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
             id="artist-input"
+            name="artist-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Artist"
             autoComplete="off"
@@ -38,6 +39,7 @@ export function SongForm({ onSubmit }: SongFormProps) {
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
             id="song-title-input"
+            name="song-title-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Song title"
             autoComplete="off"
@@ -67,7 +69,7 @@ interface EditSongFormProps {
 export function EditSongForm({ song, onSubmit }: EditSongFormProps) {
   return (
     <form className="grid gap-4 grid-cols-1 max-w-md" onSubmit={onSubmit}>
-      <input id="song-id" type="hidden" value={song.id} />
+      <input name="song-id" type="hidden" value={song.id} />
       <div>
         <label
           htmlFor="artist-input"
@@ -78,6 +80,7 @@ export function EditSongForm({ song, onSubmit }: EditSongFormProps) {
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
             id="artist-input"
+            name="artist-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Artist"
             autoComplete="off"
@@ -99,6 +102,7 @@ export function EditSongForm({ song, onSubmit }: EditSongFormProps) {
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
             id="song-title-input"
+            name="song-title-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Song title"
             autoComplete="off"

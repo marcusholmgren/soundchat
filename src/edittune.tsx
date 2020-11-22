@@ -26,13 +26,14 @@ export function EditTune() {
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // @ts-ignore
-    const form: EditTuneForm = event.target;
-    const songId: string = form['song-id'].value;
-    const songArtist: string = form['artist-input'].value;
-    const songTitle: string = form['song-title-input'].value;
 
-    updateSongInFirebase({ id: songId, songArtist, songTitle });
+    const data = new FormData(event.currentTarget)
+
+    const id = data.get('song-id') as string;
+    const songArtist = data.get('artist-input') as string;
+    const songTitle = data.get('song-title-input') as string;
+
+    updateSongInFirebase({ id: id, songArtist, songTitle });
     navigate('/my-songs');
   }
 

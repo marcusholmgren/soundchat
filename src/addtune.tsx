@@ -2,23 +2,17 @@ import React from 'react';
 import { writeSongToFirestore } from './firebase/firebaseRepository';
 import { SongForm } from './components';
 
-interface AddTuneForm {
-  'artist-input': HTMLInputElement;
-  'song-title-input': HTMLInputElement;
-  reset: () => void;
-}
-
 export function AddTune() {
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // @ts-ignore
-    const form: AddTuneForm = event.target;
-    const songArtist: string = form['artist-input'].value;
-    const songTitle: string = form['song-title-input'].value;
 
-    writeSongToFirestore(songArtist, songTitle);
+    const data = new FormData(event.currentTarget);
 
-    form.reset();
+    const artist = data.get("artist-input") as string;
+    const song = data.get("song-title-input") as string;
+    writeSongToFirestore(artist, song);
+
+    event.currentTarget.reset();
   }
 
   return (
