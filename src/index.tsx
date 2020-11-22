@@ -10,6 +10,7 @@ import { SelectArtist } from './selectartist';
 import { MySongs } from './mysongs';
 import { Signin } from './signin';
 import { NotFound } from './notfound';
+import { EditTune } from './edittune';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route path="/" element={<App />} />
           <Route path="/artist" element={<SelectArtist />} />
           <Route path="/add" element={<AddTune />} />
+          <Route path="/edit/:songId" element={<EditTune />} />
           <Route path="/listen" element={<Listen />} />
           <Route path="/my-songs" element={<MySongs />} />
           <Route path="/signin" element={<Signin />} />

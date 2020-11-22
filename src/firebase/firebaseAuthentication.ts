@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 //import "firebase/database";
 import firebaseConfig from './config';
 import { useEffect, useState } from 'react';
@@ -31,19 +32,25 @@ const firebaseInstance = new Firebase();
 export {firebaseInstance};
 */
 
-if (true) {
+let firebaseApp: firebase.app.App | null = null;
+
+if (!firebaseApp) {
   // (!firebase.apps.length) {
   //@ts-ignore
-  firebase.default.initializeApp(firebaseConfig);
+  firebaseApp = firebase.default.initializeApp(firebaseConfig);
   //app.initializeApp(firebaseConfig);
 }
 
-//@ts-ignore
-export const auth = firebase.default.auth();
+//export const auth = firebase.default.auth();
 //export const db = firebase.database();
+//@ts-ignore
+export const auth = firebaseApp.auth();
 
 //@ts-ignore
 export const provider = new firebase.default.auth.GoogleAuthProvider();
+
+//@ts-ignore
+export const firestoreDb = firebaseApp.firestore();
 
 // auth.onAuthStateChanged((user) => {
 //   if (user) {
@@ -63,18 +70,20 @@ export const provider = new firebase.default.auth.GoogleAuthProvider();
 //   });
 
 export function useAuth() {
-  const [authUser, setAuthUser] = useState<firebase.User>(null);
+  const [authUser, setAuthUser] = useState<firebase.User>();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log('User logged in', user.displayName);
-        setAuthUser(user);
-      } else {
-        setAuthUser(null);
-        console.log('User logged out');
-      }
-    });
+    const unsubscribe = auth.onAuthStateChanged(
+      (user: firebase.User | null) => {
+        if (user) {
+          console.log('User logged in', user.displayName);
+          setAuthUser(user);
+        } else {
+          setAuthUser(undefined);
+          console.log('User logged out');
+        }
+      },
+    );
 
     return () => unsubscribe();
   }, []);

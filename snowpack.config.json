@@ -1,4 +1,7 @@
 {
+  "alias": {
+    "@app": "./src"
+  },
   "extends": "@snowpack/app-scripts-react",
   "scripts": { "build:css": "postcss" },
   "plugins": [

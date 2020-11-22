@@ -12,7 +12,7 @@ import { auth, provider, FirebaseContext, useAuth } from '../../firebase';
 import { SignOut } from './components/SignOut';
 import { Signin } from '../../signin';
 
-type AppShellProps = {}
+type AppShellProps = {};
 
 export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
   const user = useAuth();
@@ -118,6 +118,37 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
     </div>
   );
 
+  const desktopLoggedInElement = user ? (
+    <div className="ml-10 flex items-baseline space-x-4">
+      <MenuItem text="Select Artist" to="/artist" selected={true} />
+      <MenuItem text="My Songs" to="/my-songs" />
+      <MenuItem text="Add Tune" to="/add" />
+    </div>
+  ) : null;
+
+  const mobileLoggedInElement = user ? (
+    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <MenuItem
+        text="Select Artist"
+        to="/artist"
+        mobile={true}
+        setMobileMenu={setMobileMenu}
+      />
+      <MenuItem
+        text="My Songs"
+        to="/my-songs"
+        mobile={true}
+        setMobileMenu={setMobileMenu}
+      />
+      <MenuItem
+        text="Add Tune"
+        to="/add"
+        mobile={true}
+        setMobileMenu={setMobileMenu}
+      />
+    </div>
+  ) : null;
+
   return (
     <div>
       <FirebaseContext.Provider value={{ user }}>
@@ -132,17 +163,7 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
                     alt="Soundchat logo"
                   />
                 </NavLink>
-                <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
-                    <MenuItem
-                      text="Select Artist"
-                      to="/artist"
-                      selected={true}
-                    />
-                    <MenuItem text="My Songs" to="/my-songs" />
-                    <MenuItem text="Add Tune" to="/add" />
-                  </div>
-                </div>
+                <div className="hidden md:block">{desktopLoggedInElement}</div>
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
@@ -273,43 +294,21 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
     -->
     */}
           <div className={'md:hidden '.concat(mobileMenu ? 'block' : 'hidden')}>
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <MenuItem
-                text="Select Artist"
-                to="/artist"
-                mobile={true}
-                setMobileMenu={setMobileMenu}
-              />
-              <MenuItem
-                text="My Songs"
-                to="/my-songs"
-                mobile={true}
-                setMobileMenu={setMobileMenu}
-              />
-              <MenuItem
-                text="Add Tune"
-                to="/add"
-                mobile={true}
-                setMobileMenu={setMobileMenu}
-              />
-            </div>
+            {mobileLoggedInElement}
             {mobileUserElement}
           </div>
         </nav>
 
-        <header className="bg-white shadow-sm">
+        {/*        <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <h1 className="text-lg leading-6 font-semibold text-gray-900">
               Soundchat
             </h1>
           </div>
-        </header>
+        </header>*/}
         <main>
           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             {/* <!-- Replace with your content --> */}
-            <div className="px-4 py-4 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
-            </div>
             {children}
             {/*  <!-- /End replace --> */}
           </div>
