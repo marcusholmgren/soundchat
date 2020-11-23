@@ -17,7 +17,6 @@ export function SongForm({ onSubmit }: SongFormProps) {
         </label>
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
-            id="artist-input"
             name="artist-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Artist"
@@ -38,7 +37,6 @@ export function SongForm({ onSubmit }: SongFormProps) {
         </label>
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
-            id="song-title-input"
             name="song-title-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Song title"
@@ -79,7 +77,6 @@ export function EditSongForm({ song, onSubmit }: EditSongFormProps) {
         </label>
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
-            id="artist-input"
             name="artist-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Artist"
@@ -101,7 +98,6 @@ export function EditSongForm({ song, onSubmit }: EditSongFormProps) {
         </label>
         <div className="mt-1 relative rounded-md shadow-sm">
           <input
-            id="song-title-input"
             name="song-title-input"
             className="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Song title"
