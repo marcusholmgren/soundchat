@@ -8,9 +8,11 @@ export function AddTune() {
 
     const data = new FormData(event.currentTarget);
 
-    const artist = data.get("artist-input") as string;
-    const song = data.get("song-title-input") as string;
-    writeSongToFirestore(artist, song);
+    const artist = data.get('artist-input') as string;
+    const songTitle = data.get('song-title-input') as string;
+    const songFile = data.get('song-file') as File;
+
+    writeSongToFirestore(artist, songTitle, songFile);
 
     event.currentTarget.reset();
   }
