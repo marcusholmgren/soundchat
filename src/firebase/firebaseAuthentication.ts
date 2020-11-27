@@ -1,7 +1,8 @@
-import * as firebase from 'firebase/app';
-import 'firebase/app';
+import firebase from 'firebase/app';
+//import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 //import "firebase/database";
 import firebaseConfig from './config';
 import { useEffect, useState } from 'react';
@@ -43,14 +44,14 @@ if (!firebaseApp) {
 
 //export const auth = firebase.default.auth();
 //export const db = firebase.database();
-//@ts-ignore
+
 export const auth = firebaseApp.auth();
 
-//@ts-ignore
 export const provider = new firebase.default.auth.GoogleAuthProvider();
 
-//@ts-ignore
 export const firestoreDb = firebaseApp.firestore();
+
+export const cloudStorage = firebaseApp.storage();
 
 // auth.onAuthStateChanged((user) => {
 //   if (user) {
@@ -70,10 +71,12 @@ export const firestoreDb = firebaseApp.firestore();
 //   });
 
 export function useAuth() {
+  //@ts-ignore
   const [authUser, setAuthUser] = useState<firebase.User>();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(
+      //@ts-ignore
       (user: firebase.User | null) => {
         if (user) {
           console.log('User logged in', user.displayName);

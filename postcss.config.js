@@ -1,5 +1,7 @@
 const tailwind = require('tailwindcss');
-const tailwindui = require('@tailwindcss/ui')
+const tailwindtypography = require('@tailwindcss/typography');
+const ar = require('@tailwindcss/aspect-ratio');
+const forms = require('@tailwindcss/forms');
 const autoprefixer = require('autoprefixer');
 //const cssnano = require('cssnano');
 
@@ -7,7 +9,7 @@ const autoprefixer = require('autoprefixer');
 // 	? [tailwind, autoprefixers, cssnano]
 // 	: [tailwind, autoprefixer];
 
-module.exports = { plugins: [tailwind, tailwindui, autoprefixer] };
+module.exports = { plugins: [tailwind, autoprefixer] };
 
 // module.exports = {
 // 	plugins: [require('tailwindcss'), require('autoprefixer')],

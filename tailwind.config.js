@@ -12,7 +12,7 @@ module.exports = {
   },
   variants: {},
   plugins: [
-    require('@tailwindcss/ui'),
+    require('@tailwindcss/typography', '@tailwindcss/aspect-ratio', '@tailwindcss/forms'),
   ],
   future: {
     removeDeprecatedGapUtilities: true,

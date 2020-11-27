@@ -1,10 +1,13 @@
 import 'firebase/auth';
 import 'firebase/firestore';
-import { firestoreDb, auth } from './firebaseAuthentication';
+import { cloudStorage, firestoreDb, auth } from './firebaseAuthentication';
+import firebase from 'firebase';
 
 export type NewSong = {
   songArtist: string;
   songTitle: string;
+  songFile: string;
+  fileType: string;
 };
 
 export type Song = {
@@ -13,10 +16,16 @@ export type Song = {
   songTitle: string;
 };
 
-export function writeSongToFirestore(songArtist: string, songTitle: string) {
+export function writeSongToFirestore(
+  songArtist: string,
+  songTitle: string,
+  songFile: File,
+) {
   const song: NewSong = {
     songArtist,
     songTitle,
+    songFile: songFile.name,
+    fileType: songFile.type,
   };
 
   auth.onAuthStateChanged((user) => {
@@ -27,12 +36,32 @@ export function writeSongToFirestore(songArtist: string, songTitle: string) {
         .add(song)
         .then((docRef) => {
           console.log('Song id:', docRef.id);
+          saveSongFile(user.uid, docRef.id, songFile);
         })
         .catch((error: any) => {
           console.error(error);
         });
     }
   });
+}
+
+function saveSongFile(userId: string, docRefId: string, file: File) {
+  const fileRef = cloudStorage.ref(`songs/${userId}/${docRefId}-${file.name}`);
+  const uploadTask = fileRef.put(file);
+
+  uploadTask.on(
+    firebase.storage.TaskEvent.STATE_CHANGED,
+    function progress(snapshot) {
+      console.log('Bytes transferred:', snapshot.bytesTransferred);
+      console.log('Total bytes:', snapshot.totalBytes);
+    },
+    function error(error) {
+      console.error('There was an error when saving to Cloud Storage', error);
+    },
+    function complete() {
+      console.log('The file has been successfully saved to Cloud Storage');
+    },
+  );
 }
 
 export function readSongsFromFirestore(): Promise<Song[]> {
@@ -56,7 +85,7 @@ export function readSongsFromFirestore(): Promise<Song[]> {
   });
 }
 
-export function deleteSongFromFirestore(songId: string) {
+export function deleteSongFromFirestore(songId: string): Promise<boolean> {
   return new Promise((resolve) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -68,7 +97,7 @@ export function deleteSongFromFirestore(songId: string) {
           .delete()
           .then(() => {
             console.log('Successfully deleted document id: ', songDocument.id);
-            resolve();
+            resolve(true);
           })
           .catch((error: any) => console.error(error));
       }
@@ -109,5 +138,28 @@ export function updateSongInFirebase(song: Song) {
       });
     } else {
     }
+  });
+}
+
+export function getAudioFromStorage(fileName: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const fileRef = cloudStorage.ref(`songs/${user.uid}/${fileName}`);
+
+        fileRef
+          .getDownloadURL()
+          .then((url) => resolve(url))
+          .catch((error) => {
+            console.error(
+              'There was an error while retreiving a file from Cloud Storage',
+              error,
+            );
+            reject(error);
+          });
+      } else {
+        reject('User does not exists');
+      }
+    });
   });
 }

@@ -27,7 +27,7 @@ export function EditTune() {
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const data = new FormData(event.currentTarget)
+    const data = new FormData(event.currentTarget);
 
     const id = data.get('song-id') as string;
     const songArtist = data.get('artist-input') as string;
