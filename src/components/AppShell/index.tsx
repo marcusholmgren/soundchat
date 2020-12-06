@@ -159,7 +159,7 @@ export function AppShell({ children }: PropsWithChildren<AppShellProps>) {
                 <NavLink to="/" className="flex-shrink-0">
                   <img
                     className="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
+                    src="/apple-touch-icon.png"
                     alt="Soundchat logo"
                   />
                 </NavLink>
