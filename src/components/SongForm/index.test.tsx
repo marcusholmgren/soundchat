@@ -9,5 +9,5 @@ it('renders SongForm without crashing', () => {
 
 it('renders EditSongForm without crashing', () => {
   const div = document.createElement('div');
-  ReactDom.render(<EditSongForm onSubmit={jest.fn} song={jest.fn()} />, div);
+  ReactDom.render(<EditSongForm onSubmit={jest.fn} song={{id: '', songArtist: '', songTitle: ''}} />, div);
 });

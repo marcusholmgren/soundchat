@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Song } from '@app/firebase/firebaseRepository';
+import type { Song } from '../../firebase/firebaseRepository';
 
 interface SongFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;

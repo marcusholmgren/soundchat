@@ -1,7 +1,5 @@
-import 'firebase/auth';
-import 'firebase/firestore';
+import firebase from 'firebase/app';
 import { cloudStorage, firestoreDb, auth } from './firebaseAuthentication';
-import firebase from 'firebase';
 
 export type NewSong = {
   songArtist: string;

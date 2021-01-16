@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-//import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -33,21 +32,26 @@ const firebaseInstance = new Firebase();
 export {firebaseInstance};
 */
 
-let firebaseApp: firebase.app.App | null = null;
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
+//let firebaseApp: firebase.app.App | null = null;
+
+/*
 if (!firebaseApp) {
   // (!firebase.apps.length) {
   //@ts-ignore
-  firebaseApp = firebase.default.initializeApp(firebaseConfig);
+  firebaseApp = firebase.initializeApp(firebaseConfig);
   //app.initializeApp(firebaseConfig);
 }
+
+*/
 
 //export const auth = firebase.default.auth();
 //export const db = firebase.database();
 
 export const auth = firebaseApp.auth();
 
-export const provider = new firebase.default.auth.GoogleAuthProvider();
+export const provider = new firebase.auth.GoogleAuthProvider();
 
 export const firestoreDb = firebaseApp.firestore();
 
@@ -71,7 +75,6 @@ export const cloudStorage = firebaseApp.storage();
 //   });
 
 export function useAuth() {
-  //@ts-ignore
   const [authUser, setAuthUser] = useState<firebase.User>();
 
   useEffect(() => {
