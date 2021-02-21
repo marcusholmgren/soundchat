@@ -13,6 +13,6 @@ module.exports = {
   },
   variants: {},
   plugins: [
-    require('@tailwindcss/typography', '@tailwindcss/aspect-ratio', '@tailwindcss/forms'),
+    require('@tailwindcss/typography'), require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms'),
   ]
 };
