@@ -1,98 +1,41 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
-//import "firebase/database";
+import {initializeApp} from "firebase/app";
+import {getAuth, GoogleAuthProvider} from "firebase/auth";
+import {getFirestore} from "firebase/firestore";
+import {getStorage} from 'firebase/storage'
 import firebaseConfig from './config';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
+import type {UserInfo} from "firebase/auth";
 
-/*
-export class Firebase {
-    auth: firebase.auth.Auth
-    constructor() {
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        //app.analytics();
-        debugger;
-        this.auth = firebase.auth();
-        //this.db = app.firestore();
-    }
 
-    googleSignin() {
-        debugger;
-        const provider = new firebase.auth.GoogleAuthProvider();
-        this.auth.signInWithPopup(provider)
-            .then((result) => console.log("successfully logged in", result.user?.displayName))
-            .catch((error) => console.error(error))
-    }
-}
+const firebaseApp = initializeApp(firebaseConfig);
 
-const firebaseInstance = new Firebase();
+export const auth = getAuth(firebaseApp);
 
-export {firebaseInstance};
-*/
+export const provider = new GoogleAuthProvider();
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firestoreDb = getFirestore(firebaseApp);
 
-//let firebaseApp: firebase.app.App | null = null;
+export const cloudStorage = getStorage(firebaseApp);
 
-/*
-if (!firebaseApp) {
-  // (!firebase.apps.length) {
-  //@ts-ignore
-  firebaseApp = firebase.initializeApp(firebaseConfig);
-  //app.initializeApp(firebaseConfig);
-}
-
-*/
-
-//export const auth = firebase.default.auth();
-//export const db = firebase.database();
-
-export const auth = firebaseApp.auth();
-
-export const provider = new firebase.auth.GoogleAuthProvider();
-
-export const firestoreDb = firebaseApp.firestore();
-
-export const cloudStorage = firebaseApp.storage();
-
-// auth.onAuthStateChanged((user) => {
-//   if (user) {
-//     console.log('User logged in', user.displayName);
-//   } else {
-//     console.log('User logged out');
-//   }
-// });
-
-// auth
-//   .signOut()
-//   .then(function () {
-//     // Sign-out successful.
-//   })
-//   .catch(function (error) {
-//     // An error happened.
-//   });
 
 export function useAuth() {
-  const [authUser, setAuthUser] = useState<firebase.User>();
+    const [authUser, setAuthUser] = useState<UserInfo>();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(
-      //@ts-ignore
-      (user: firebase.User | null) => {
-        if (user) {
-          console.log('User logged in', user.displayName);
-          setAuthUser(user);
-        } else {
-          setAuthUser(undefined);
-          console.log('User logged out');
-        }
-      },
-    );
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(
+            (user) => {
+                if (user) {
+                    console.log('User logged in', user.displayName);
+                    setAuthUser(user);
+                } else {
+                    setAuthUser(undefined);
+                    console.log('User logged out');
+                }
+            },
+        );
 
-    return () => unsubscribe();
-  }, []);
+        return () => unsubscribe();
+    }, []);
 
-  return authUser;
+    return authUser;
 }

@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import type firebase from 'firebase';
+import type {UserInfo} from 'firebase/auth';
 
 type AuthenticationContext = {
-  user: firebase.User | undefined;
+  user: UserInfo | undefined;
 };
 
 export const FirebaseContext = createContext<AuthenticationContext>({
