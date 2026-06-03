@@ -49,10 +49,21 @@ const insertAuditStmt = db.prepare(
   'INSERT INTO auth_audit_log(email, outcome, reason) VALUES (?, ?, ?)',
 );
 
-const normalizeEmail = (email) => email.trim().toLowerCase();
+const normalizeEmail = (email) => {
+  if (!email || typeof email !== 'string') {
+    return null;
+  }
+
+  return email.trim().toLowerCase();
+};
 
 function getAllowlistedUser(email) {
-  return selectUserStmt.get(normalizeEmail(email));
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) {
+    return undefined;
+  }
+
+  return selectUserStmt.get(normalizedEmail);
 }
 
 function listAllowlistedUsers() {
@@ -61,6 +72,9 @@ function listAllowlistedUsers() {
 
 function upsertAllowlistedUser({ email, status, invitedBy = null }) {
   const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) {
+    throw new Error('Valid email is required.');
+  }
   upsertUserStmt.run(normalizedEmail, status, invitedBy);
   return getAllowlistedUser(normalizedEmail);
 }

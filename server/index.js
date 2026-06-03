@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 const { OAuth2Client } = require('google-auth-library');
 const {
   getAllowlistedUser,
@@ -11,13 +12,13 @@ const {
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
-const jwtSecret = process.env.APP_JWT_SECRET || '';
-const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
-const adminApiKey = process.env.ADMIN_API_KEY || '';
+const jwtSecret = process.env.APP_JWT_SECRET;
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const adminApiKey = process.env.ADMIN_API_KEY;
 const frontendOrigin = process.env.FRONTEND_ORIGIN || 'http://localhost:8080';
 const oauthClient = new OAuth2Client(googleClientId);
 
-if (!jwtSecret || !googleClientId || !adminApiKey) {
+if (!jwtSecret?.trim() || !googleClientId?.trim() || !adminApiKey?.trim()) {
   throw new Error(
     'Missing env vars. Set APP_JWT_SECRET, GOOGLE_CLIENT_ID, and ADMIN_API_KEY.',
   );
@@ -31,6 +32,24 @@ app.use(
 app.use(express.json());
 
 const allowedStatuses = new Set(['invited', 'active', 'revoked']);
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+const sessionLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const auditAuth = ({ email, outcome, reason }) => {
   writeAuthAudit({ email, outcome, reason });
@@ -80,7 +99,7 @@ app.get('/api/health', (_, res) => {
   res.json({ ok: true });
 });
 
-app.post('/api/auth/google', async (req, res) => {
+app.post('/api/auth/google', authLimiter, async (req, res) => {
   const { idToken } = req.body || {};
   if (!idToken) {
     return res.status(400).json({ error: 'Missing Google idToken.' });
@@ -154,7 +173,7 @@ app.post('/api/auth/google', async (req, res) => {
   }
 });
 
-app.get('/api/me', requireSession, (req, res) => {
+app.get('/api/me', sessionLimiter, requireSession, (req, res) => {
   const allowlistedUser = getAllowlistedUser(req.session.email);
 
   if (!allowlistedUser || allowlistedUser.status === 'revoked') {
@@ -167,11 +186,11 @@ app.get('/api/me', requireSession, (req, res) => {
   });
 });
 
-app.get('/api/admin/users', requireAdmin, (_, res) => {
+app.get('/api/admin/users', adminLimiter, requireAdmin, (_, res) => {
   res.json({ users: listAllowlistedUsers() });
 });
 
-app.post('/api/admin/users', requireAdmin, (req, res) => {
+app.post('/api/admin/users', adminLimiter, requireAdmin, (req, res) => {
   const { email, status = 'invited', invitedBy = 'admin' } = req.body || {};
   if (!email || typeof email !== 'string') {
     return res.status(400).json({ error: 'Email is required.' });

@@ -6,7 +6,7 @@ type SessionUser = {
   status: 'invited' | 'active' | 'revoked';
 };
 
-const SESSION_STORAGE_KEY = 'soundchat-session-token';
+const SESSION_TOKEN_STORAGE_KEY = 'soundchat-session-token';
 const apiBaseUrl =
   import.meta.env.SNOWPACK_PUBLIC_API_BASE_URL || 'http://localhost:3001';
 const googleClientId = import.meta.env.SNOWPACK_PUBLIC_GOOGLE_CLIENT_ID;
@@ -20,13 +20,13 @@ function App() {
   );
 
   const applySession = React.useCallback((token: string, user: SessionUser) => {
-    localStorage.setItem(SESSION_STORAGE_KEY, token);
+    localStorage.setItem(SESSION_TOKEN_STORAGE_KEY, token);
     setCurrentUser(user);
     setErrorMessage('');
   }, []);
 
   const clearSession = React.useCallback(() => {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
+    localStorage.removeItem(SESSION_TOKEN_STORAGE_KEY);
     setCurrentUser(null);
   }, []);
 
@@ -51,7 +51,7 @@ function App() {
   );
 
   React.useEffect(() => {
-    const existingToken = localStorage.getItem(SESSION_STORAGE_KEY);
+    const existingToken = localStorage.getItem(SESSION_TOKEN_STORAGE_KEY);
     if (!existingToken) {
       setLoading(false);
       return;
@@ -142,7 +142,7 @@ function App() {
     script.async = true;
     script.defer = true;
     script.dataset.googleIdentity = 'true';
-    script.onload = renderGoogleButton;
+    script.addEventListener('load', renderGoogleButton);
     document.body.appendChild(script);
 
     return () => script.removeEventListener('load', renderGoogleButton);
