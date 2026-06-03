@@ -20,6 +20,6 @@ interface Window {
 }
 
 interface ImportMetaEnv {
-  readonly SNOWPACK_PUBLIC_API_BASE_URL?: string;
-  readonly SNOWPACK_PUBLIC_GOOGLE_CLIENT_ID?: string;
+  readonly VITE_API_BASE_URL?: string;
+  readonly VITE_GOOGLE_CLIENT_ID?: string;
 }
