@@ -2,6 +2,47 @@
 
 > ✨ Bootstrapped with Create Snowpack App (CSA).
 
+## Restricted Google authentication
+
+This repository now includes a backend auth service that:
+
+- verifies Google ID tokens server-side
+- checks the signed-in email against an allowlist table
+- issues app session tokens only for invited/active users
+- blocks non-invited or revoked users
+- exposes admin endpoints to add/revoke users without redeploying
+- writes auth decision logs for auditability
+
+### Start the backend auth service
+
+```bash
+npm run start:server
+```
+
+Required environment variables:
+
+- `GOOGLE_CLIENT_ID`: OAuth client ID used by Google Sign-In
+- `APP_JWT_SECRET`: secret used to sign app session tokens
+- `ADMIN_API_KEY`: API key for invite/admin endpoints
+
+Optional environment variables:
+
+- `PORT` (default `3001`)
+- `FRONTEND_ORIGIN` (default `http://localhost:8080`)
+- `ALLOWLIST_DB_PATH` (default `server/data/soundchat-allowlist.sqlite`)
+
+### Frontend environment variables
+
+- `SNOWPACK_PUBLIC_GOOGLE_CLIENT_ID`: Google client ID for Google Sign-In button
+- `SNOWPACK_PUBLIC_API_BASE_URL`: backend URL (default `http://localhost:3001`)
+
+### Admin allowlist endpoints
+
+Use `x-admin-api-key: <ADMIN_API_KEY>`.
+
+- `POST /api/admin/users` body: `{ "email": "person@example.com", "status": "invited" }`
+- `GET /api/admin/users`
+
 ## Available Scripts
 
 ### npm start
